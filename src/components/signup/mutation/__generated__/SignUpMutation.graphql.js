@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 256b02d955676f0b866f2072da7eae72
+ * @relayHash ea69be64fdad7f41058e73b01840ec74
  */
 
 /* eslint-disable */
@@ -11,6 +11,7 @@
 import type { ConcreteRequest } from 'relay-runtime';
 export type RegisterEmailInput = {
   name: string,
+  university: string,
   email: string,
   password: string,
   clientMutationId?: ?string,

@@ -3,9 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { isLoggedIn } from '../security/security';
 import Auth from '../screens/auth/Auth';
-
-
-console.log(isLoggedIn())
+import Dashboard from '../screens/dashboard/Dashboard';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -17,8 +15,8 @@ const AppRouter = () => (
       />
       <Route
         path={'/'}
-        exact={true}
-        render={() => isLoggedIn() ? <div> DASHBOARD </div> :<Redirect to={'/auth'}/> }
+        exact={false}
+        render={(props) => isLoggedIn() ? <Dashboard {...props} /> :<Redirect to={'/auth'}/> }
       />
     </Switch>
   </BrowserRouter>

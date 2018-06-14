@@ -1,3 +1,48 @@
+"""Article data"""
+type Article implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  title: String
+  description: String
+  category: String
+  createdBy: Boolean
+  tags: [String]
+}
+
+input ArticleAddInput {
+  title: String!
+  description: String!
+  category: String!
+  tags: String
+  clientMutationId: String
+}
+
+type ArticleAddPayload {
+  article: Article
+  error: String
+  clientMutationId: String
+}
+
+"""A connection to a list of items."""
+type ArticleConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ArticleEdge]
+  count: Int
+}
+
+"""An edge in a connection."""
+type ArticleEdge {
+  """The item at the end of the edge"""
+  node: Article
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 input ChangePasswordInput {
   oldPassword: String!
 
@@ -28,6 +73,7 @@ type Mutation {
   LoginEmail(input: LoginEmailInput!): LoginEmailPayload
   RegisterEmail(input: RegisterEmailInput!): RegisterEmailPayload
   ChangePassword(input: ChangePasswordInput!): ChangePasswordPayload
+  ArticleAdd(input: ArticleAddInput!): ArticleAddPayload
 }
 
 """An object with an ID"""
@@ -61,10 +107,13 @@ type Query {
   me: User
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
+  article(id: ID!): Article
+  articles(after: String, first: Int, before: String, last: Int, search: String): ArticleConnection
 }
 
 input RegisterEmailInput {
   name: String!
+  university: String!
   email: String!
   password: String!
   clientMutationId: String

@@ -7,11 +7,17 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
+const StyledInput = styled(TextField)`
+  textarea {
+    height: 100%;
+  }
+`;
+
 export default (props) => {
-  const { name, touched, errors, handleChange, handleBlur, values, label, fullWidth = true } = props;
+  const { name, touched, errors, handleChange, handleBlur, values, label, fullWidth = true, multiline = false, rows, rowsMax } = props;
   return (
     <Wrapper>
-      <TextField
+      <StyledInput
         type={name}
         fullWidth={fullWidth}
         label={label}
@@ -22,6 +28,9 @@ export default (props) => {
         onBlur={handleBlur}
         error={!!touched[name] && !!errors[name]}
         helperText={errors[name] && !!touched[name] ? errors[name] : props.helperText}
+        multiline={multiline}
+        rows={rows}
+        rowsMax={rowsMax}
       />
     </Wrapper>
   )

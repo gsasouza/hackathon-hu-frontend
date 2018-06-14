@@ -9,7 +9,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { TextField } from '../common';
-import SignUpMutation from './mutations/SignUpMutation';
+import SignUpMutation from './mutation/SignUpMutation';
 import { login } from '../../security/security';
 
 const SignUpSchema = Yup.object().shape({
