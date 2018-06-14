@@ -1,7 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
+import { isLoggedIn } from '../security/security';
 import Auth from '../screens/auth/Auth';
+
+
+console.log(isLoggedIn())
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -14,7 +18,7 @@ const AppRouter = () => (
       <Route
         path={'/'}
         exact={true}
-        render={() => <div> DASHBOARD </div>}
+        render={() => isLoggedIn() ? <div> DASHBOARD </div> :<Redirect to={'/auth'}/> }
       />
     </Switch>
   </BrowserRouter>

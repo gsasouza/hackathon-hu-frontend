@@ -6,26 +6,29 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button';
 import { withFormik } from 'formik';
-import { object, string } from 'yup'
+import * as Yup from 'yup';
 
 import { TextField } from '../common';
 import SignUpMutation from './mutations/SignUpMutation';
+import { login } from '../../security/security';
 
-const SignUpSchema = object().shape({
-  name: string().required(),
-  password: string().required,
+const SignUpSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Digite um e-email válido')
+    .required('Preencha o campo de e-mail'),
+  password: Yup.string()
+    .min(6, 'A senha deve ter no minímo 6 caracteres')
+    .required('Preencha o campo de senha'),
+  university: Yup.string()
+    .required('Preencha o campo de instituição'),
+  name: Yup.string()
+    .required('Preencha o campo de nome')
 });
 
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px
-`;
-
-const Wrapper = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
 `;
 
 const StyledCard = styled(Card)`
@@ -86,6 +89,7 @@ class SignUp extends React.Component {
 
 export default withFormik({
   mapPropsToValues: () => ({ email: '', password: '', university: '', name: '' }),
+  validationSchema: SignUpSchema,
   handleSubmit: (values, formikBag) => {
     const { setStatus, setSubmitting, props } = formikBag;
     const { name, university, password, email } = values;
@@ -102,9 +106,11 @@ export default withFormik({
       setSubmitting(false);
     };
 
-    const onCompleted = () => {
+    const onCompleted = ({ RegisterEmail: { token } }) => {
       setStatus({ success: true, message: 'Operação feita com êxito!' });
+      login(token);
       setSubmitting(false);
+      props.history.push('/');
     };
 
     SignUpMutation.commit(input, onCompleted, onError);

@@ -1,9 +1,8 @@
 
 import * as React from 'react';
 import { QueryRenderer } from 'react-relay';
-import { getEnvironment } from 'react-releasy';
+import environment from './environment';
 
-const environment = getEnvironment();
 
 export function createQueryRenderer(
   FragmentComponent,

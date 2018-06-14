@@ -21,7 +21,7 @@ export default (props) => {
         onChange={handleChange}
         onBlur={handleBlur}
         error={!!touched[name] && !!errors[name]}
-        helperText={errors[name] ? errors[name] : props.helperText}
+        helperText={errors[name] && !!touched[name] ? errors[name] : props.helperText}
       />
     </Wrapper>
   )
