@@ -6,7 +6,7 @@ type Article implements Node {
   title: String
   description: String
   category: String
-  createdBy: Boolean
+  createdBy: User
   tags: [String]
 }
 

@@ -4,8 +4,9 @@ import { Route } from 'react-router-dom';
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import Article from '../../components/article/Article';
+import Article from '../../components/article/ArticleList';
 import ArticleAdd from '../../components/article/ArticleAdd';
+import ArticleDetail from '../../components/article/ArticleDetail';
 
 const Wrapper = styled.div`
   height: 100%
@@ -33,6 +34,11 @@ export default class Dashboard extends React.Component {
           path={'/articles/add'}
           exact={true}
           render={(props) => <ArticleAdd {...props}/> }
+        />
+        <Route
+          path={'/articles/:id'}
+          exact={true}
+          render={(props) => <ArticleDetail {...props}/> }
         />
       </Wrapper>
     )

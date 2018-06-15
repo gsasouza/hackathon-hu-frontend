@@ -1,5 +1,6 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 import { GRAPHQL_URL } from '../config';
+import { getAccessToken } from '../security/security';
 
 const fetchQuery = async (operation, variables, cacheConfig, uploadables) => {
   const response = await fetch(GRAPHQL_URL, {
@@ -7,6 +8,7 @@ const fetchQuery = async (operation, variables, cacheConfig, uploadables) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: getAccessToken(),
     },
     body: JSON.stringify({
       query: operation.text,

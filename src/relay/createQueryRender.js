@@ -6,12 +6,12 @@ import environment from './environment';
 
 export function createQueryRenderer(
   FragmentComponent,
-  Component,
   config
 ) {
   const { query, queriesParams } = config;
 
   class QueryRendererWrapper extends React.Component {
+
     render() {
       const variables = queriesParams ? queriesParams(this.props) : config.variables;
 
@@ -45,5 +45,5 @@ export function createQueryRenderer(
     }
   }
 
-  return hoistStatics(QueryRendererWrapper, Component);
+  return QueryRendererWrapper;
 }
