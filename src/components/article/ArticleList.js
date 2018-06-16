@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { createRefetchContainer, graphql } from 'react-relay';
+import TextField from '@material-ui/core/TextField';
 
 import { createQueryRenderer } from '../../relay/createQueryRender';
 import { Content, Table } from '../common';
@@ -24,6 +25,7 @@ const TableWrapper = styled.div`
 class ArticleList extends React.Component {
   state = {
     quantityPerPage: 10,
+    search: ''
   };
 
   columns = [
@@ -40,6 +42,15 @@ class ArticleList extends React.Component {
       },
     },
   ];
+
+  handleSearch = (term: string) => {
+    const refetchVariables = fragmentVariables => ({
+      ...fragmentVariables,
+      search: term,
+    });
+
+    this.props.relay.refetch(refetchVariables);
+  };
 
   setQuantityPerPage = value => {
     this.setState({ quantityPerPage: value }, () => this.loadPage(true, value));

@@ -14,12 +14,38 @@ export type ArticleDetail_query = {|
   +article: ?{|
     +title: ?string
   |},
+  +likes: ?{|
+    +count: ?number
+  |},
+  +follows: ?{|
+    +count: ?number
+  |},
+  +likesFromMe: ?boolean,
+  +followsFromMe: ?boolean,
   +$refType: ArticleDetail_query$ref,
 |};
 */
 
 
-const node/*: ConcreteFragment*/ = {
+const node/*: ConcreteFragment*/ = (function(){
+var v0 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "count",
+    "args": null,
+    "storageKey": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "article",
+    "variableName": "id",
+    "type": "ID!"
+  }
+];
+return {
   "kind": "Fragment",
   "name": "ArticleDetail_query",
   "type": "Query",
@@ -57,9 +83,44 @@ const node/*: ConcreteFragment*/ = {
           "storageKey": null
         }
       ]
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "likes",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "LikeConnection",
+      "plural": false,
+      "selections": v0
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "follows",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "FollowConnection",
+      "plural": false,
+      "selections": v0
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "likesFromMe",
+      "args": v1,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "followsFromMe",
+      "args": v1,
+      "storageKey": null
     }
   ]
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = '22dc96002f3dc9c8c4a66adebe13aa63';
+(node/*: any*/).hash = '814f63cbe7859487fd83964ea91e656d';
 module.exports = node;

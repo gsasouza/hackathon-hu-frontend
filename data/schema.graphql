@@ -141,6 +141,102 @@ type ChangePasswordPayload {
   clientMutationId: String
 }
 
+"""Follow data"""
+type Follow implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  article: Article
+  user: User
+}
+
+input FollowAddInput {
+  articleId: ID!
+  clientMutationId: String
+}
+
+type FollowAddPayload {
+  error: String
+  clientMutationId: String
+}
+
+"""A connection to a list of items."""
+type FollowConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FollowEdge]
+  count: Int
+}
+
+"""An edge in a connection."""
+type FollowEdge {
+  """The item at the end of the edge"""
+  node: Follow
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+input FollowRemoveInput {
+  articleId: ID!
+  clientMutationId: String
+}
+
+type FollowRemovePayload {
+  error: String
+  clientMutationId: String
+}
+
+"""Like data"""
+type Like implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  article: Article
+  user: User
+}
+
+input LikeAddInput {
+  articleId: ID!
+  clientMutationId: String
+}
+
+type LikeAddPayload {
+  error: String
+  clientMutationId: String
+}
+
+"""A connection to a list of items."""
+type LikeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikeEdge]
+  count: Int
+}
+
+"""An edge in a connection."""
+type LikeEdge {
+  """The item at the end of the edge"""
+  node: Like
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+input LikeRemoveInput {
+  articleId: ID!
+  clientMutationId: String
+}
+
+type LikeRemovePayload {
+  error: String
+  clientMutationId: String
+}
+
 input LoginEmailInput {
   email: String!
   password: String!
@@ -163,6 +259,10 @@ type Mutation {
   SignFeed(input: SignFeedInput!): SignFeedPayload
   SignFeedCancel(input: SignFeedCancelInput!): SignFeedCancelPayload
   SignFeedCancelCode(input: SignFeedCancelCodeInput!): SignFeedCancelCodePayload
+  LikeAdd(input: LikeAddInput!): LikeAddPayload
+  LikeRemove(input: LikeRemoveInput!): LikeRemovePayload
+  FollowAdd(input: FollowAddInput!): FollowAddPayload
+  FollowRemove(input: FollowRemoveInput!): FollowRemovePayload
 }
 
 """An object with an ID"""
@@ -202,6 +302,10 @@ type Query {
   actions(after: String, first: Int, before: String, last: Int, search: String): ActionConnection
   author(id: ID!): Author
   authors(after: String, first: Int, before: String, last: Int, search: String): AuthorConnection
+  likesFromMe(article: ID!): Boolean
+  likes(after: String, first: Int, before: String, last: Int): LikeConnection
+  followsFromMe(article: ID!): Boolean
+  follows(after: String, first: Int, before: String, last: Int): FollowConnection
 }
 
 input RegisterEmailInput {

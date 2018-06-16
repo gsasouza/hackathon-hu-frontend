@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 205d3b463cc2913d83a6e021e3602a1e
+ * @relayHash 1ef845583501f2fa96920cb2dd8dab66
  */
 
 /* eslint-disable */
@@ -31,6 +31,14 @@ fragment ArticleDetail_query_1Bmzm5 on Query {
     title
     id
   }
+  likes {
+    count
+  }
+  follows {
+    count
+  }
+  likesFromMe(article: $id)
+  followsFromMe(article: $id)
 }
 */
 
@@ -42,13 +50,30 @@ var v0 = [
     "type": "ID!",
     "defaultValue": null
   }
+],
+v1 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "count",
+    "args": null,
+    "storageKey": null
+  }
+],
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "article",
+    "variableName": "id",
+    "type": "ID!"
+  }
 ];
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "ArticleDetailQuery",
   "id": null,
-  "text": "query ArticleDetailQuery(\n  $id: ID!\n) {\n  ...ArticleDetail_query_1Bmzm5\n}\n\nfragment ArticleDetail_query_1Bmzm5 on Query {\n  article(id: $id) {\n    title\n    id\n  }\n}\n",
+  "text": "query ArticleDetailQuery(\n  $id: ID!\n) {\n  ...ArticleDetail_query_1Bmzm5\n}\n\nfragment ArticleDetail_query_1Bmzm5 on Query {\n  article(id: $id) {\n    title\n    id\n  }\n  likes {\n    count\n  }\n  follows {\n    count\n  }\n  likesFromMe(article: $id)\n  followsFromMe(article: $id)\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -107,6 +132,40 @@ return {
             "storageKey": null
           }
         ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "likes",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "LikeConnection",
+        "plural": false,
+        "selections": v1
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "follows",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "FollowConnection",
+        "plural": false,
+        "selections": v1
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "likesFromMe",
+        "args": v2,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "followsFromMe",
+        "args": v2,
+        "storageKey": null
       }
     ]
   }
