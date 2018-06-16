@@ -12,12 +12,7 @@ import type { FragmentReference } from "relay-runtime";
 declare export opaque type ArticleDetail_query$ref: FragmentReference;
 export type ArticleDetail_query = {|
   +article: ?{|
-    +title: ?string,
-    +description: ?string,
-    +createdBy: ?{|
-      +id: string,
-      +name: ?string,
-    |},
+    +title: ?string
   |},
   +$refType: ArticleDetail_query$ref,
 |};
@@ -60,43 +55,11 @@ const node/*: ConcreteFragment*/ = {
           "name": "title",
           "args": null,
           "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "description",
-          "args": null,
-          "storageKey": null
-        },
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "name": "createdBy",
-          "storageKey": null,
-          "args": null,
-          "concreteType": "User",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "id",
-              "args": null,
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "name",
-              "args": null,
-              "storageKey": null
-            }
-          ]
         }
       ]
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'cca87978ca070cc5564e561df884ceb9';
+(node/*: any*/).hash = '22dc96002f3dc9c8c4a66adebe13aa63';
 module.exports = node;

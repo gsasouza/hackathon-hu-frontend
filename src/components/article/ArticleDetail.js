@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import { createFragmentContainer, graphql } from 'react-relay';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
+import HeartBorderIcon from '@material-ui/icons/FavoriteBorder';
+import HeartIcon from '@material-ui/icons/Favorite';
+
 
 import { createQueryRenderer } from '../../relay/createQueryRender';
 import { Content } from '../common';
@@ -22,14 +27,29 @@ const Title = styled.div`
 `;
 
 class ArticleDetail extends React.Component {
+
+  state = {
+    isLiked: false,
+    isFollowing: false,
+  };
+
+  onClickLike = () => this.setState({ isLiked: !this.state.isLiked });
+
+  onClickFollow = () => this.setState({ isFollowing: !this.state.isFollowing });
+
   render () {
-    const { query } = this.props;
-    const { title, description, createdBy } = query.article;
+    const { isLiked, isFollowing } = this.state;
     return (
       <Content>
         <Header>
           <Title>
-            {title}
+            {'teste'}
+            <div onClick={this.onClickLike}>
+              { isLiked ? <HeartIcon /> : <HeartBorderIcon />}
+            </div>
+            <div onClick={this.onClickFollow}>
+              { isFollowing ? <StarIcon /> : <StarBorderIcon />}
+            </div>
           </Title>
         </Header>
       </Content>
@@ -43,11 +63,6 @@ const ArticleDetailFragmentContainer = createFragmentContainer(ArticleDetail, {
     fragment ArticleDetail_query on Query @argumentDefinitions(id: { type: "ID!" }) {
       article(id: $id) {
         title
-        description
-        createdBy {
-          id
-          name
-        }
       }
     }
   `,

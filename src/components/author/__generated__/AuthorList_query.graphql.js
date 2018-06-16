@@ -9,9 +9,9 @@
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type ArticleList_query$ref: FragmentReference;
-export type ArticleList_query = {|
-  +articles: ?{|
+declare export opaque type AuthorList_query$ref: FragmentReference;
+export type AuthorList_query = {|
+  +authors: ?{|
     +count: ?number,
     +pageInfo: {|
       +hasNextPage: boolean,
@@ -22,19 +22,20 @@ export type ArticleList_query = {|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
         +id: string,
-        +title: ?string,
-        +category: ?string,
+        +name: ?string,
+        +email: ?string,
+        +unit: ?string,
       |}
     |}>,
   |},
-  +$refType: ArticleList_query$ref,
+  +$refType: AuthorList_query$ref,
 |};
 */
 
 
 const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "name": "ArticleList_query",
+  "name": "AuthorList_query",
   "type": "Query",
   "metadata": {
     "connection": [
@@ -43,7 +44,7 @@ const node/*: ConcreteFragment*/ = {
         "cursor": null,
         "direction": "bidirectional",
         "path": [
-          "articles"
+          "authors"
         ]
       }
     ]
@@ -83,8 +84,8 @@ const node/*: ConcreteFragment*/ = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "articles",
-      "name": "__ArticleList_articles_connection",
+      "alias": "authors",
+      "name": "__AuthorList_authors_connection",
       "storageKey": null,
       "args": [
         {
@@ -94,7 +95,7 @@ const node/*: ConcreteFragment*/ = {
           "type": "String"
         }
       ],
-      "concreteType": "ArticleConnection",
+      "concreteType": "AuthorConnection",
       "plural": false,
       "selections": [
         {
@@ -149,7 +150,7 @@ const node/*: ConcreteFragment*/ = {
           "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "ArticleEdge",
+          "concreteType": "AuthorEdge",
           "plural": true,
           "selections": [
             {
@@ -158,7 +159,7 @@ const node/*: ConcreteFragment*/ = {
               "name": "node",
               "storageKey": null,
               "args": null,
-              "concreteType": "Article",
+              "concreteType": "Author",
               "plural": false,
               "selections": [
                 {
@@ -171,14 +172,21 @@ const node/*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "title",
+                  "name": "name",
                   "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "category",
+                  "name": "email",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "unit",
                   "args": null,
                   "storageKey": null
                 },
@@ -205,5 +213,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '257b0fc806782ddf18306b08b4536293';
+(node/*: any*/).hash = 'e711dd59a6a5c48876f1a9e02ec47189';
 module.exports = node;

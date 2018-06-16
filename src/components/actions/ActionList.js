@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { createRefetchContainer, graphql } from 'react-relay';
@@ -21,7 +20,7 @@ const TableWrapper = styled.div`
   margin-top: 30px;
 `;
 
-class ArticleList extends React.Component {
+class ActionList extends React.Component {
   state = {
     quantityPerPage: 10,
   };
@@ -34,9 +33,15 @@ class ArticleList extends React.Component {
       },
     },
     {
-      property: 'category',
+      property: 'unit',
       header: {
-        label: 'Categoria',
+        label: 'Unidade',
+      },
+    },
+    {
+      property: 'situation',
+      header: {
+        label: 'Situação',
       },
     },
   ];
@@ -85,24 +90,20 @@ class ArticleList extends React.Component {
     const { articles } = query;
     const { count, edges, pageInfo } = articles;
     const { quantityPerPage } = this.state;
-    console.log(edges);
     const data = edges.map(edge => edge.node);
     return (
       <Content>
         <Header>
           <Typography variant="headline" component="h3">
-            Pesquisas
+            Ações
           </Typography>
-          <Button variant="contained" color="primary" style={{ marginRight: '40px' }} onClick={() => this.props.history.push('/articles/add')}>
-            Adicionar Pesquisa
-          </Button>
         </Header>
         <Divider />
         <TableWrapper>
           <Table
             columns={this.columns}
             data={data}
-            onRowClick={({ id }) => this.props.history.push(`/articles/${id}`)}
+            onRowClick={({ id }) => this.props.history.push(`/actions/${id}`)}
             paginationProps={{
               count,
               setQuantityPerPage: this.setQuantityPerPage,
@@ -117,11 +118,11 @@ class ArticleList extends React.Component {
   }
 }
 
-const ArticleListRefetchContainer = createRefetchContainer(
-  ArticleList,
+const ActionListRefetchContainer = createRefetchContainer(
+  ActionList,
   {
     query: graphql`
-      fragment ArticleList_query on Query
+      fragment ActionList_query on Query
         @argumentDefinitions(
           first: { type: Int }
           last: { type: Int }
@@ -129,8 +130,8 @@ const ArticleListRefetchContainer = createRefetchContainer(
           after: { type: String }
           search: { type: String }
         ) {
-        articles(first: $first, last: $last, after: $after, before: $before, search: $search)
-          @connection(key: "ArticleList_articles") {
+        actions(first: $first, last: $last, after: $after, before: $before, search: $search)
+          @connection(key: "ActionList_actions") {
           count
           pageInfo {
             hasNextPage
@@ -142,7 +143,8 @@ const ArticleListRefetchContainer = createRefetchContainer(
             node {
               id
               title
-              category
+              unit
+              situation
             }
           }
         }
@@ -150,29 +152,29 @@ const ArticleListRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query ArticleListRefetchQuery(
+    query ActionListRefetchQuery(
       $after: String
       $before: String
       $search: String
       $first: Int
       $last: Int
     ) {
-     ...ArticleList_query
+     ...ActionList_query
         @arguments(first: $first, last: $last, after: $after, before: $before, search: $search)
     }
   `,
 );
 
-export default createQueryRenderer(ArticleListRefetchContainer, {
+export default createQueryRenderer(ActionListRefetchContainer, {
   query: graphql`
-    query ArticleListQuery(
+    query ActionListQuery(
       $after: String
       $before: String
       $search: String
       $first: Int
       $last: Int
     ) {
-      ...ArticleList_query
+      ...ActionList_query
         @arguments(first: $first, last: $last, after: $after, before: $before, search: $search)
     }
   `,

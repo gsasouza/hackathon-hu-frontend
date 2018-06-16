@@ -8,17 +8,13 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import { withFormik } from 'formik';
 
-import { TextField } from '../common';
-import LoginMutation from './mutation/LoginMutation';
-import { login } from '../../security/security';
+import { TextField, withSnackbar } from '../common';
+import SignFeedMutation from './mutation/SignFeedMutation';
 
-const LoginSchema = Yup.object().shape({
+const SignSchema = Yup.object().shape({
   email: Yup.string()
     .email('Digite um e-email válido')
     .required('Preencha o campo de e-mail'),
-  password: Yup.string()
-    .min(6, 'A senha deve ter no minímo 6 caracteres')
-    .required('Preencha o campo de senha'),
 });
 
 const FormContainer = styled.div`
@@ -51,29 +47,28 @@ const Actions = styled(CardActions)`
   margin: 10px;
 `;
 
-class Login extends React.Component {
+class Sign extends React.Component {
 
-  handleSignUp = () => this.props.history.push('/auth/signup');
+  handleCancel = () => this.props.history.push('/sign/cancel');
 
   render() {
     const { handleSubmit } = this.props;
     return (
       <StyledCard>
         <CardHeader
-          title={'Login'}
+          title={'Assinar Feed'}
         />
         <Content>
           <FormContainer>
             <TextField name={'email'} label={'Email'}{...this.props} />
-            <TextField name={'password'} label={'Senha'} {...this.props} />
           </FormContainer>
         </Content>
         <Actions>
-          <Button variant="contained" color="secondary" onClick={this.handleSignUp}>
-            Cadastrar
+          <Button variant="contained" color="secondary" onClick={this.handleCancel}>
+            Cancelar Assinatura
           </Button>
           <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Entrar
+            Assinar
           </Button>
         </Actions>
       </StyledCard>
@@ -81,30 +76,31 @@ class Login extends React.Component {
   }
 }
 
-export default withFormik({
-  mapPropsToValues: () => ({ email: '', password: '' }),
-  validationSchema: LoginSchema,
-  handleSubmit: (values, formikBag) => {
-    const { setStatus, setSubmitting, props } = formikBag;
-    const { password, email } = values;
 
-    const input = {
-      password,
-      email
-    };
+export default withSnackbar(
+  withFormik({
+    mapPropsToValues: () => ({ email: ''}),
+    validationSchema: SignSchema,
+    handleSubmit: (values, formikBag) => {
+      const { setSubmitting, props } = formikBag;
 
-    const onError = () => {
-      setStatus({ fail: true, message: 'Ocorreu um erro ao realizar a operação' });
-      setSubmitting(false);
-    };
+      const { email } = values;
 
-    const onCompleted = ({ LoginEmail: { token } }) => {
-      setStatus({ success: true, message: 'Operação feita com êxito!' });
-      login(token);
-      setSubmitting(false);
-      props.history.push('/');
-    };
+      const input = {
+        email
+      };
 
-    LoginMutation.commit(input, onCompleted, onError);
-  }
-})(Login);
+      const onError = () => {
+        props.showSnackbar({ message: 'Ocorreu um erro ao realizar a operação' });
+        setSubmitting(false);
+      };
+
+      const onCompleted = () => {
+        props.showSnackbar({ message: 'Operação feita com êxito!' });
+        setSubmitting(false);
+      };
+
+      SignFeedMutation.commit(input, onCompleted, onError);
+    }
+  })(Sign)
+);

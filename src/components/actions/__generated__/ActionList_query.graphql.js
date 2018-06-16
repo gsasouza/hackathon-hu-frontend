@@ -9,9 +9,9 @@
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type ArticleList_query$ref: FragmentReference;
-export type ArticleList_query = {|
-  +articles: ?{|
+declare export opaque type ActionList_query$ref: FragmentReference;
+export type ActionList_query = {|
+  +actions: ?{|
     +count: ?number,
     +pageInfo: {|
       +hasNextPage: boolean,
@@ -23,18 +23,19 @@ export type ArticleList_query = {|
       +node: ?{|
         +id: string,
         +title: ?string,
-        +category: ?string,
+        +unit: ?string,
+        +situation: ?string,
       |}
     |}>,
   |},
-  +$refType: ArticleList_query$ref,
+  +$refType: ActionList_query$ref,
 |};
 */
 
 
 const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "name": "ArticleList_query",
+  "name": "ActionList_query",
   "type": "Query",
   "metadata": {
     "connection": [
@@ -43,7 +44,7 @@ const node/*: ConcreteFragment*/ = {
         "cursor": null,
         "direction": "bidirectional",
         "path": [
-          "articles"
+          "actions"
         ]
       }
     ]
@@ -83,8 +84,8 @@ const node/*: ConcreteFragment*/ = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "articles",
-      "name": "__ArticleList_articles_connection",
+      "alias": "actions",
+      "name": "__ActionList_actions_connection",
       "storageKey": null,
       "args": [
         {
@@ -94,7 +95,7 @@ const node/*: ConcreteFragment*/ = {
           "type": "String"
         }
       ],
-      "concreteType": "ArticleConnection",
+      "concreteType": "ActionConnection",
       "plural": false,
       "selections": [
         {
@@ -149,7 +150,7 @@ const node/*: ConcreteFragment*/ = {
           "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "ArticleEdge",
+          "concreteType": "ActionEdge",
           "plural": true,
           "selections": [
             {
@@ -158,7 +159,7 @@ const node/*: ConcreteFragment*/ = {
               "name": "node",
               "storageKey": null,
               "args": null,
-              "concreteType": "Article",
+              "concreteType": "Action",
               "plural": false,
               "selections": [
                 {
@@ -178,7 +179,14 @@ const node/*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "category",
+                  "name": "unit",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "situation",
                   "args": null,
                   "storageKey": null
                 },
@@ -205,5 +213,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '257b0fc806782ddf18306b08b4536293';
+(node/*: any*/).hash = 'dc9bc8a96a449dacd7d6c13d9f4a881b';
 module.exports = node;

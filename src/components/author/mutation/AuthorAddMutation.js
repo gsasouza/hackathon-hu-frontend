@@ -2,25 +2,26 @@ import { graphql, commitMutation } from 'react-relay';
 import environment from '../../../relay/environment';
 
 const mutation = graphql`
-  mutation ArticleAddMutation($input: ArticleAddInput!) {
-    ArticleAdd(input: $input){
+  mutation AuthorAddMutation($input: AuthorAddInput!) {
+    AuthorAdd(input: $input){
       article {
-        title
-        category
+        name
+        unit
+        email
       }
       error
     }
   }
 `;
 
-function commit({ title, description, category }, onCompleted, onError) {
+function commit({ name, email, unit }, onCompleted, onError) {
   return commitMutation(environment, {
     mutation,
     variables: {
       input: {
-        title,
-        description,
-        category,
+        name,
+        email,
+        unit,
       },
     },
     onCompleted,

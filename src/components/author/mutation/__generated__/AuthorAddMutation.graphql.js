@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d0ae0b4b39b1c3ebe308855dcee9e48a
+ * @relayHash 7bf33e6d009adc189330fdffd13145ed
  */
 
 /* eslint-disable */
@@ -9,21 +9,21 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type ArticleAddInput = {
-  title: string,
-  description: string,
-  category: string,
-  tags?: ?string,
+export type AuthorAddInput = {
+  name: string,
+  email: string,
+  unit: string,
   clientMutationId?: ?string,
 };
-export type ArticleAddMutationVariables = {|
-  input: ArticleAddInput
+export type AuthorAddMutationVariables = {|
+  input: AuthorAddInput
 |};
-export type ArticleAddMutationResponse = {|
-  +ArticleAdd: ?{|
+export type AuthorAddMutationResponse = {|
+  +AuthorAdd: ?{|
     +article: ?{|
-      +title: ?string,
-      +category: ?string,
+      +name: ?string,
+      +unit: ?string,
+      +email: ?string,
     |},
     +error: ?string,
   |}
@@ -32,13 +32,14 @@ export type ArticleAddMutationResponse = {|
 
 
 /*
-mutation ArticleAddMutation(
-  $input: ArticleAddInput!
+mutation AuthorAddMutation(
+  $input: AuthorAddInput!
 ) {
-  ArticleAdd(input: $input) {
+  AuthorAdd(input: $input) {
     article {
-      title
-      category
+      name
+      unit
+      email
       id
     }
     error
@@ -51,7 +52,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "ArticleAddInput!",
+    "type": "AuthorAddInput!",
     "defaultValue": null
   }
 ],
@@ -60,24 +61,31 @@ v1 = [
     "kind": "Variable",
     "name": "input",
     "variableName": "input",
-    "type": "ArticleAddInput!"
+    "type": "AuthorAddInput!"
   }
 ],
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "title",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "category",
+  "name": "unit",
   "args": null,
   "storageKey": null
 },
 v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "email",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "error",
@@ -87,13 +95,13 @@ v4 = {
 return {
   "kind": "Request",
   "operationKind": "mutation",
-  "name": "ArticleAddMutation",
+  "name": "AuthorAddMutation",
   "id": null,
-  "text": "mutation ArticleAddMutation(\n  $input: ArticleAddInput!\n) {\n  ArticleAdd(input: $input) {\n    article {\n      title\n      category\n      id\n    }\n    error\n  }\n}\n",
+  "text": "mutation AuthorAddMutation(\n  $input: AuthorAddInput!\n) {\n  AuthorAdd(input: $input) {\n    article {\n      name\n      unit\n      email\n      id\n    }\n    error\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "ArticleAddMutation",
+    "name": "AuthorAddMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -101,10 +109,10 @@ return {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "ArticleAdd",
+        "name": "AuthorAdd",
         "storageKey": null,
         "args": v1,
-        "concreteType": "ArticleAddPayload",
+        "concreteType": "AuthorAddPayload",
         "plural": false,
         "selections": [
           {
@@ -113,30 +121,31 @@ return {
             "name": "article",
             "storageKey": null,
             "args": null,
-            "concreteType": "Article",
+            "concreteType": "Author",
             "plural": false,
             "selections": [
               v2,
-              v3
+              v3,
+              v4
             ]
           },
-          v4
+          v5
         ]
       }
     ]
   },
   "operation": {
     "kind": "Operation",
-    "name": "ArticleAddMutation",
+    "name": "AuthorAddMutation",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "ArticleAdd",
+        "name": "AuthorAdd",
         "storageKey": null,
         "args": v1,
-        "concreteType": "ArticleAddPayload",
+        "concreteType": "AuthorAddPayload",
         "plural": false,
         "selections": [
           {
@@ -145,11 +154,12 @@ return {
             "name": "article",
             "storageKey": null,
             "args": null,
-            "concreteType": "Article",
+            "concreteType": "Author",
             "plural": false,
             "selections": [
               v2,
               v3,
+              v4,
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -159,7 +169,7 @@ return {
               }
             ]
           },
-          v4
+          v5
         ]
       }
     ]
@@ -167,5 +177,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '75b220b4154610247314e0c2d238c1c4';
+(node/*: any*/).hash = 'ad2c690a2757e01f450e1435133b9c29';
 module.exports = node;

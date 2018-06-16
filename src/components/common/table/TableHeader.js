@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';

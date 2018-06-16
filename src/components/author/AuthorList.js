@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { createRefetchContainer, graphql } from 'react-relay';
 
 import { createQueryRenderer } from '../../relay/createQueryRender';
-import { Content, Table } from '../common';
+import { Content, Table, withSnackbar } from '../common';
+
+import AuthorRemoveMutation from './mutation/AuthorRemoveMutation';
 
 const Header = styled.div`
   display: flex;
@@ -21,25 +24,62 @@ const TableWrapper = styled.div`
   margin-top: 30px;
 `;
 
-class ArticleList extends React.Component {
+class AuthorList extends React.Component {
   state = {
     quantityPerPage: 10,
   };
 
+  handleRemove = ({ id }) => {
+    const { showSnackbar } = this.props;
+
+    const onCompleted = ({ AuthorRemove: { error }}) => {
+      if (error) return showSnackbar({ message: error });
+      showSnackbar({
+        message: 'Operação realizada com êxito!',
+      });
+      window.location.reload();
+    };
+
+    const onError = () => {
+      this.context.showSnackbar({
+        message: 'Ocorreu um erro ao realizar a operação',
+      });
+    };
+
+    AuthorRemoveMutation.commit({ id }, onCompleted, onError);
+  };
+
   columns = [
     {
-      property: 'title',
+      property: 'name',
       header: {
-        label: 'Título',
+        label: 'Nome',
       },
     },
     {
-      property: 'category',
+      property: 'email',
       header: {
-        label: 'Categoria',
+        label: 'E-mail',
       },
     },
+    {
+      property: 'unit',
+      header: {
+        label: 'Unidade',
+      },
+    },
+    {
+      property: 'remove',
+      header: {
+        label: 'Remover',
+      },
+      type: 'icon',
+      icon: <DeleteIcon />,
+      onClick: this.handleRemove
+    },
   ];
+
+
 
   setQuantityPerPage = value => {
     this.setState({ quantityPerPage: value }, () => this.loadPage(true, value));
@@ -82,19 +122,18 @@ class ArticleList extends React.Component {
   };
   render () {
     const { query } = this.props;
-    const { articles } = query;
-    const { count, edges, pageInfo } = articles;
+    const { authors } = query;
+    const { count, edges, pageInfo } = authors;
     const { quantityPerPage } = this.state;
-    console.log(edges);
     const data = edges.map(edge => edge.node);
     return (
       <Content>
         <Header>
           <Typography variant="headline" component="h3">
-            Pesquisas
+            Pesquisadores
           </Typography>
-          <Button variant="contained" color="primary" style={{ marginRight: '40px' }} onClick={() => this.props.history.push('/articles/add')}>
-            Adicionar Pesquisa
+          <Button variant="contained" color="primary" style={{ marginRight: '40px' }} onClick={() => this.props.history.push('/authors/add')}>
+            Adicionar Pesquisador
           </Button>
         </Header>
         <Divider />
@@ -102,7 +141,7 @@ class ArticleList extends React.Component {
           <Table
             columns={this.columns}
             data={data}
-            onRowClick={({ id }) => this.props.history.push(`/articles/${id}`)}
+            onRowClick={() => {}}
             paginationProps={{
               count,
               setQuantityPerPage: this.setQuantityPerPage,
@@ -117,11 +156,11 @@ class ArticleList extends React.Component {
   }
 }
 
-const ArticleListRefetchContainer = createRefetchContainer(
-  ArticleList,
+const AuthorListRefetchContainer = createRefetchContainer(
+  AuthorList,
   {
     query: graphql`
-      fragment ArticleList_query on Query
+      fragment AuthorList_query on Query
         @argumentDefinitions(
           first: { type: Int }
           last: { type: Int }
@@ -129,8 +168,8 @@ const ArticleListRefetchContainer = createRefetchContainer(
           after: { type: String }
           search: { type: String }
         ) {
-        articles(first: $first, last: $last, after: $after, before: $before, search: $search)
-          @connection(key: "ArticleList_articles") {
+        authors(first: $first, last: $last, after: $after, before: $before, search: $search)
+          @connection(key: "AuthorList_authors") {
           count
           pageInfo {
             hasNextPage
@@ -140,9 +179,10 @@ const ArticleListRefetchContainer = createRefetchContainer(
           }
           edges {
             node {
-              id
-              title
-              category
+              id 
+              name
+              email
+              unit
             }
           }
         }
@@ -150,35 +190,37 @@ const ArticleListRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query ArticleListRefetchQuery(
+    query AuthorListRefetchQuery(
       $after: String
       $before: String
       $search: String
       $first: Int
       $last: Int
     ) {
-     ...ArticleList_query
+     ...AuthorList_query
         @arguments(first: $first, last: $last, after: $after, before: $before, search: $search)
     }
   `,
 );
 
-export default createQueryRenderer(ArticleListRefetchContainer, {
-  query: graphql`
-    query ArticleListQuery(
-      $after: String
-      $before: String
-      $search: String
-      $first: Int
-      $last: Int
-    ) {
-      ...ArticleList_query
-        @arguments(first: $first, last: $last, after: $after, before: $before, search: $search)
-    }
-  `,
-  variables: {
-    first: 10,
-    cursor: null,
-    search: '',
-  },
-});
+export default withSnackbar(
+  createQueryRenderer(AuthorListRefetchContainer, {
+    query: graphql`
+      query AuthorListQuery(
+        $after: String
+        $before: String
+        $search: String
+        $first: Int
+        $last: Int
+      ) {
+        ...AuthorList_query
+          @arguments(first: $first, last: $last, after: $after, before: $before, search: $search)
+      }
+    `,
+    variables: {
+      first: 10,
+      cursor: null,
+      search: '',
+    },
+  })
+);

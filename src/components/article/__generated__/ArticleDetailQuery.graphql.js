@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a1bc41e7e57964530d09bedd77cd78eb
+ * @relayHash 205d3b463cc2913d83a6e021e3602a1e
  */
 
 /* eslint-disable */
@@ -29,11 +29,6 @@ query ArticleDetailQuery(
 fragment ArticleDetail_query_1Bmzm5 on Query {
   article(id: $id) {
     title
-    description
-    createdBy {
-      id
-      name
-    }
     id
   }
 }
@@ -47,20 +42,13 @@ var v0 = [
     "type": "ID!",
     "defaultValue": null
   }
-],
-v1 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-};
+];
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "ArticleDetailQuery",
   "id": null,
-  "text": "query ArticleDetailQuery(\n  $id: ID!\n) {\n  ...ArticleDetail_query_1Bmzm5\n}\n\nfragment ArticleDetail_query_1Bmzm5 on Query {\n  article(id: $id) {\n    title\n    description\n    createdBy {\n      id\n      name\n    }\n    id\n  }\n}\n",
+  "text": "query ArticleDetailQuery(\n  $id: ID!\n) {\n  ...ArticleDetail_query_1Bmzm5\n}\n\nfragment ArticleDetail_query_1Bmzm5 on Query {\n  article(id: $id) {\n    title\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -114,30 +102,10 @@ return {
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "description",
+            "name": "id",
             "args": null,
             "storageKey": null
-          },
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "name": "createdBy",
-            "storageKey": null,
-            "args": null,
-            "concreteType": "User",
-            "plural": false,
-            "selections": [
-              v1,
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "name",
-                "args": null,
-                "storageKey": null
-              }
-            ]
-          },
-          v1
+          }
         ]
       }
     ]

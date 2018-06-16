@@ -1,13 +1,45 @@
+"""Action data"""
+type Action implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  title: String
+  code: String
+  unit: String
+  situation: String
+}
+
+"""A connection to a list of items."""
+type ActionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ActionEdge]
+  count: Int
+}
+
+"""An edge in a connection."""
+type ActionEdge {
+  """The item at the end of the edge"""
+  node: Action
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 """Article data"""
 type Article implements Node {
   """The ID of an object"""
   id: ID!
   _id: String
   title: String
-  description: String
+  authors: [String]
+  doiCode: String
+  publishDate: String
   category: String
-  createdBy: User
-  tags: [String]
+  magazine: String
+  url: String
 }
 
 input ArticleAddInput {
@@ -43,6 +75,58 @@ type ArticleEdge {
   cursor: String!
 }
 
+"""Author data"""
+type Author implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  name: String
+  email: String
+  unit: String
+}
+
+input AuthorAddInput {
+  name: String!
+  email: String!
+  unit: String!
+  clientMutationId: String
+}
+
+type AuthorAddPayload {
+  article: Author
+  error: String
+  clientMutationId: String
+}
+
+"""A connection to a list of items."""
+type AuthorConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AuthorEdge]
+  count: Int
+}
+
+"""An edge in a connection."""
+type AuthorEdge {
+  """The item at the end of the edge"""
+  node: Author
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+input AuthorRemoveInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type AuthorRemovePayload {
+  error: String
+  clientMutationId: String
+}
+
 input ChangePasswordInput {
   oldPassword: String!
 
@@ -74,6 +158,11 @@ type Mutation {
   RegisterEmail(input: RegisterEmailInput!): RegisterEmailPayload
   ChangePassword(input: ChangePasswordInput!): ChangePasswordPayload
   ArticleAdd(input: ArticleAddInput!): ArticleAddPayload
+  AuthorAdd(input: AuthorAddInput!): AuthorAddPayload
+  AuthorRemove(input: AuthorRemoveInput!): AuthorRemovePayload
+  SignFeed(input: SignFeedInput!): SignFeedPayload
+  SignFeedCancel(input: SignFeedCancelInput!): SignFeedCancelPayload
+  SignFeedCancelCode(input: SignFeedCancelCodeInput!): SignFeedCancelCodePayload
 }
 
 """An object with an ID"""
@@ -109,6 +198,10 @@ type Query {
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
   article(id: ID!): Article
   articles(after: String, first: Int, before: String, last: Int, search: String): ArticleConnection
+  action(id: ID!): Action
+  actions(after: String, first: Int, before: String, last: Int, search: String): ActionConnection
+  author(id: ID!): Author
+  authors(after: String, first: Int, before: String, last: Int, search: String): AuthorConnection
 }
 
 input RegisterEmailInput {
@@ -125,12 +218,44 @@ type RegisterEmailPayload {
   clientMutationId: String
 }
 
+input SignFeedCancelCodeInput {
+  email: String!
+  clientMutationId: String
+}
+
+type SignFeedCancelCodePayload {
+  error: String
+  clientMutationId: String
+}
+
+input SignFeedCancelInput {
+  email: String!
+  clientMutationId: String
+}
+
+type SignFeedCancelPayload {
+  email: String
+  error: String
+  clientMutationId: String
+}
+
+input SignFeedInput {
+  email: String!
+  clientMutationId: String
+}
+
+type SignFeedPayload {
+  error: String
+  clientMutationId: String
+}
+
 """User data"""
 type User implements Node {
   """The ID of an object"""
   id: ID!
   _id: String
   name: String
+  isAdmin: Boolean
   email: String
   active: Boolean
 }

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d0674bab2007e9cfa4e03e97a168637a
+ * @relayHash 865b02b0b6092200f239077e8607eff7
  */
 
 /* eslint-disable */
@@ -9,33 +9,33 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type ArticleList_query$ref = any;
-export type ArticleListRefetchQueryVariables = {|
+type AuthorList_query$ref = any;
+export type AuthorListQueryVariables = {|
   after?: ?string,
   before?: ?string,
   search?: ?string,
   first?: ?number,
   last?: ?number,
 |};
-export type ArticleListRefetchQueryResponse = {|
-  +$fragmentRefs: ArticleList_query$ref
+export type AuthorListQueryResponse = {|
+  +$fragmentRefs: AuthorList_query$ref
 |};
 */
 
 
 /*
-query ArticleListRefetchQuery(
+query AuthorListQuery(
   $after: String
   $before: String
   $search: String
   $first: Int
   $last: Int
 ) {
-  ...ArticleList_query_nvrZx
+  ...AuthorList_query_nvrZx
 }
 
-fragment ArticleList_query_nvrZx on Query {
-  articles(first: $first, last: $last, after: $after, before: $before, search: $search) {
+fragment AuthorList_query_nvrZx on Query {
+  authors(first: $first, last: $last, after: $after, before: $before, search: $search) {
     count
     pageInfo {
       hasNextPage
@@ -46,8 +46,9 @@ fragment ArticleList_query_nvrZx on Query {
     edges {
       node {
         id
-        title
-        category
+        name
+        email
+        unit
         __typename
       }
       cursor
@@ -92,20 +93,20 @@ var v0 = [
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "ArticleListRefetchQuery",
+  "name": "AuthorListQuery",
   "id": null,
-  "text": "query ArticleListRefetchQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...ArticleList_query_nvrZx\n}\n\nfragment ArticleList_query_nvrZx on Query {\n  articles(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        title\n        category\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
+  "text": "query AuthorListQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...AuthorList_query_nvrZx\n}\n\nfragment AuthorList_query_nvrZx on Query {\n  authors(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        name\n        email\n        unit\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "ArticleListRefetchQuery",
+    "name": "AuthorListQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "FragmentSpread",
-        "name": "ArticleList_query",
+        "name": "AuthorList_query",
         "args": [
           {
             "kind": "Variable",
@@ -143,13 +144,13 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "ArticleListRefetchQuery",
+    "name": "AuthorListQuery",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "articles",
+        "name": "authors",
         "storageKey": null,
         "args": [
           {
@@ -183,7 +184,7 @@ return {
             "type": "String"
           }
         ],
-        "concreteType": "ArticleConnection",
+        "concreteType": "AuthorConnection",
         "plural": false,
         "selections": [
           {
@@ -238,7 +239,7 @@ return {
             "name": "edges",
             "storageKey": null,
             "args": null,
-            "concreteType": "ArticleEdge",
+            "concreteType": "AuthorEdge",
             "plural": true,
             "selections": [
               {
@@ -247,7 +248,7 @@ return {
                 "name": "node",
                 "storageKey": null,
                 "args": null,
-                "concreteType": "Article",
+                "concreteType": "Author",
                 "plural": false,
                 "selections": [
                   {
@@ -260,14 +261,21 @@ return {
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "title",
+                    "name": "name",
                     "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "category",
+                    "name": "email",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "unit",
                     "args": null,
                     "storageKey": null
                   },
@@ -294,7 +302,7 @@ return {
       {
         "kind": "LinkedHandle",
         "alias": null,
-        "name": "articles",
+        "name": "authors",
         "args": [
           {
             "kind": "Variable",
@@ -328,7 +336,7 @@ return {
           }
         ],
         "handle": "connection",
-        "key": "ArticleList_articles",
+        "key": "AuthorList_authors",
         "filters": [
           "search"
         ]
@@ -338,5 +346,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '134189e4b83cfdf36e3dd70c52bf4d23';
+(node/*: any*/).hash = 'bc47dabcbc3557d4aa95b0bd9308bf53';
 module.exports = node;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dc904b5c6b0eb4124ba16cea3cd2df6b
+ * @relayHash b3d42eb9a4655a26cd4a02a4fcd0e003
  */
 
 /* eslint-disable */
@@ -48,10 +48,6 @@ fragment ArticleList_query_nvrZx on Query {
         id
         title
         category
-        createdBy {
-          name
-          id
-        }
         __typename
       }
       cursor
@@ -92,20 +88,13 @@ var v0 = [
     "type": "Int",
     "defaultValue": null
   }
-],
-v1 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-};
+];
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "ArticleListQuery",
   "id": null,
-  "text": "query ArticleListQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...ArticleList_query_nvrZx\n}\n\nfragment ArticleList_query_nvrZx on Query {\n  articles(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        title\n        category\n        createdBy {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
+  "text": "query ArticleListQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...ArticleList_query_nvrZx\n}\n\nfragment ArticleList_query_nvrZx on Query {\n  articles(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        title\n        category\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -261,7 +250,13 @@ return {
                 "concreteType": "Article",
                 "plural": false,
                 "selections": [
-                  v1,
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "id",
+                    "args": null,
+                    "storageKey": null
+                  },
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -275,25 +270,6 @@ return {
                     "name": "category",
                     "args": null,
                     "storageKey": null
-                  },
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "createdBy",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "User",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "name",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      v1
-                    ]
                   },
                   {
                     "kind": "ScalarField",
