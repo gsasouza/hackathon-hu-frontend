@@ -97,8 +97,8 @@ class AuthorList extends React.Component {
 
   loadPageForwardVars = (increasePgSize) => {
     const { query } = this.props;
-    const { articles } = query;
-    const { pageInfo } = articles;
+    const { authors } = query;
+    const { pageInfo } = authors;
     const lastItem = pageInfo.endCursor;
     return fragmentVariables => ({
       ...fragmentVariables,
@@ -109,8 +109,8 @@ class AuthorList extends React.Component {
 
   loadPageBackwardsVars = () => {
     const { query } = this.props;
-    const { articles } = query;
-    const { pageInfo } = articles;
+    const { authors } = query;
+    const { pageInfo } = authors;
     const firstItem = pageInfo.startCursor;
 
     return fragmentVariables => ({

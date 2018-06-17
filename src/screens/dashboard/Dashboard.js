@@ -11,6 +11,13 @@ import ArticleDetail from '../../components/article/ArticleDetail';
 import Author from '../../components/author/AuthorList';
 import AuthorAdd from '../../components/author/AuthorAdd';
 
+import Action from '../../components/actions/ActionList';
+import ActionAdd from '../../components/actions/ActionAdd';
+import ActionDetail from '../../components/actions/ActionDetail';
+
+import News from '../../components/news/NewsList';
+import NewsDetail from '../../components/news/NewsDetail';
+
 import {createQueryRenderer} from "../../relay/createQueryRender";
 import {createFragmentContainer, graphql} from "react-relay";
 
@@ -56,6 +63,31 @@ class Dashboard extends React.Component {
             path={'/authors/add'}
             exact={true}
             render={(props) => <AuthorAdd {...props}/> }
+          />
+          <Route
+            path={'/actions'}
+            exact={true}
+            render={(props) => <Action {...props}/> }
+          />
+          <Route
+            path={'/actions/add'}
+            exact={true}
+            render={(props) => <ActionAdd {...props}/> }
+          />
+          <Route
+            path={'/actions/:id'}
+            exact={true}
+            render={(props) => <ActionDetail {...props}/> }
+          />
+          <Route
+            path={'/news'}
+            exact={true}
+            render={(props) => <News {...props}/> }
+          />
+          <Route
+            path={'/news/:id'}
+            exact={true}
+            render={(props) => <NewsDetail {...props}/> }
           />
         </Switch>
       </Wrapper>

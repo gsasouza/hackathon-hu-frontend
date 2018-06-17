@@ -8,6 +8,7 @@ import { DRAWER_WIDTH } from './consts';
 
 const StyledAppBar = styled(AppBar)`
   width: calc(100% - ${DRAWER_WIDTH}px) !important;
+  background-color: rgb(74, 141, 119) !important;
 `;
 
 export default class Dashboard extends React.Component {

@@ -2,10 +2,12 @@ import React from 'react';
 import TableMUI from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
-import TableFooter from './TableFooter';
+
 
 const Wrapper = styled(Paper)`
   width: 100%;
@@ -19,20 +21,47 @@ const StyledTable = styled(TableMUI)`
   min-width: 500px
 `;
 
+const EmptyMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 26px;
+  margin: 20px;
+`;
+
 class Table extends React.Component {
 
+  handleNextButtonClick = () => {
+    this.props.paginationProps.handleChangePage(true);
+  };
+
   render() {
-    const { columns, refetchProps, paginationProps, data, onRowClick } = this.props;
+    const { columns, paginationProps, data, onRowClick, emptyMessage = 'Nenhum resultado encontrado :(' } = this.props;
     return (
-      <Wrapper>
-        <TableContainer>
-          <StyledTable>
-            <TableHeader columns={columns}/>
-            <TableBody data={data} columns={columns} onRowClick={onRowClick}/>
-            <TableFooter {...paginationProps} {...refetchProps} />
-          </StyledTable>
-        </TableContainer>
-      </Wrapper>
+      <div>
+        {data.length ? (
+          <Wrapper>
+            <TableContainer>
+              <StyledTable>
+                <TableHeader columns={columns}/>
+                <TableBody data={data} columns={columns} onRowClick={onRowClick}/>
+              </StyledTable>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <IconButton
+                  onClick={this.handleNextButtonClick}
+                  disabled={!paginationProps.pageInfo.hasNextPage}
+                  aria-label="Carregar Mais"
+                >
+                  <KeyboardArrowDown />
+                </IconButton>
+              </div>
+            </TableContainer>
+          </Wrapper>
+        ) : (
+          <EmptyMessage>
+            {emptyMessage}
+          </EmptyMessage>
+        )}
+      </div>
     );
   }
 }

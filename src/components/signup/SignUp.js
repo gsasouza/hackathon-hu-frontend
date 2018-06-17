@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { TextField } from '../common';
+import { TextField, withSnackbar } from '../common';
 import SignUpMutation from './mutation/SignUpMutation';
 import { login } from '../../security/security';
 
@@ -78,7 +78,7 @@ class SignUp extends React.Component {
           <Button variant="contained" color="secondary" onClick={this.handleLogin}>
             Entrar
           </Button>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!!Object.keys(this.props.errors).length}>
             Finalizar
           </Button>
         </Actions>
@@ -87,32 +87,34 @@ class SignUp extends React.Component {
   }
 }
 
-export default withFormik({
-  mapPropsToValues: () => ({ email: '', password: '', university: '', name: '' }),
-  validationSchema: SignUpSchema,
-  handleSubmit: (values, formikBag) => {
-    const { setStatus, setSubmitting, props } = formikBag;
-    const { name, university, password, email } = values;
+export default withSnackbar(
+  withFormik({
+    mapPropsToValues: () => ({ email: '', password: '', university: '', name: '' }),
+    validationSchema: SignUpSchema,
+    handleSubmit: (values, formikBag) => {
+      const { setStatus, setSubmitting, props } = formikBag;
+      const { name, university, password, email } = values;
 
-    const input = {
-      name,
-      university,
-      password,
-      email
-    };
+      const input = {
+        name,
+        university,
+        password,
+        email
+      };
 
-    const onError = () => {
-      setStatus({ fail: true, message: 'Ocorreu um erro ao realizar a operação' });
-      setSubmitting(false);
-    };
+      const onError = () => {
+        setStatus({ fail: true, message: 'Ocorreu um erro ao realizar a operação' });
+        setSubmitting(false);
+      };
 
-    const onCompleted = ({ RegisterEmail: { token } }) => {
-      setStatus({ success: true, message: 'Operação feita com êxito!' });
-      login(token);
-      setSubmitting(false);
-      props.history.push('/');
-    };
+      const onCompleted = ({ RegisterEmail: { token, error } }) => {
+        setStatus({ success: true, message: 'Operação feita com êxito!' });
+        login(token);
+        setSubmitting(false);
+        props.history.push('/');
+      };
 
-    SignUpMutation.commit(input, onCompleted, onError);
-  }
-})(SignUp)
+      SignUpMutation.commit(input, onCompleted, onError);
+    }
+  })(SignUp)
+);

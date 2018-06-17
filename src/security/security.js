@@ -4,4 +4,7 @@ export const login = (accessToken) => localStorage.setItem(ACCESS_TOKEN, accessT
 
 export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
 
-export const isLoggedIn = () => !!getAccessToken();
+export const isLoggedIn = () => {
+  const token = getAccessToken();
+  return token !== 'null' && !!token;
+};

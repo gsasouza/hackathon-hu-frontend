@@ -12,7 +12,8 @@ import type { FragmentReference } from "relay-runtime";
 declare export opaque type ArticleDetail_query$ref: FragmentReference;
 export type ArticleDetail_query = {|
   +article: ?{|
-    +title: ?string
+    +title: ?string,
+    +category: ?string,
   |},
   +likes: ?{|
     +count: ?number
@@ -30,6 +31,14 @@ export type ArticleDetail_query = {|
 const node/*: ConcreteFragment*/ = (function(){
 var v0 = [
   {
+    "kind": "Variable",
+    "name": "article",
+    "variableName": "id",
+    "type": "ID"
+  }
+],
+v1 = [
+  {
     "kind": "ScalarField",
     "alias": null,
     "name": "count",
@@ -37,7 +46,7 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = [
+v2 = [
   {
     "kind": "Variable",
     "name": "article",
@@ -81,6 +90,13 @@ return {
           "name": "title",
           "args": null,
           "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "category",
+          "args": null,
+          "storageKey": null
         }
       ]
     },
@@ -89,38 +105,38 @@ return {
       "alias": null,
       "name": "likes",
       "storageKey": null,
-      "args": null,
+      "args": v0,
       "concreteType": "LikeConnection",
       "plural": false,
-      "selections": v0
+      "selections": v1
     },
     {
       "kind": "LinkedField",
       "alias": null,
       "name": "follows",
       "storageKey": null,
-      "args": null,
+      "args": v2,
       "concreteType": "FollowConnection",
       "plural": false,
-      "selections": v0
+      "selections": v1
     },
     {
       "kind": "ScalarField",
       "alias": null,
       "name": "likesFromMe",
-      "args": v1,
+      "args": v2,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
       "name": "followsFromMe",
-      "args": v1,
+      "args": v0,
       "storageKey": null
     }
   ]
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '814f63cbe7859487fd83964ea91e656d';
+(node/*: any*/).hash = '4efa08002a94f31bdb9ed6ab0e269320';
 module.exports = node;

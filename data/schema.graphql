@@ -4,9 +4,23 @@ type Action implements Node {
   id: ID!
   _id: String
   title: String
+  description: String
   code: String
   unit: String
   situation: String
+}
+
+input ActionAddInput {
+  title: String!
+  description: String!
+  unit: String!
+  clientMutationId: String
+}
+
+type ActionAddPayload {
+  action: Action
+  error: String
+  clientMutationId: String
 }
 
 """A connection to a list of items."""
@@ -253,6 +267,7 @@ type Mutation {
   LoginEmail(input: LoginEmailInput!): LoginEmailPayload
   RegisterEmail(input: RegisterEmailInput!): RegisterEmailPayload
   ChangePassword(input: ChangePasswordInput!): ChangePasswordPayload
+  ActionAdd(input: ActionAddInput!): ActionAddPayload
   ArticleAdd(input: ArticleAddInput!): ArticleAddPayload
   AuthorAdd(input: AuthorAddInput!): AuthorAddPayload
   AuthorRemove(input: AuthorRemoveInput!): AuthorRemovePayload
@@ -263,6 +278,39 @@ type Mutation {
   LikeRemove(input: LikeRemoveInput!): LikeRemovePayload
   FollowAdd(input: FollowAddInput!): FollowAddPayload
   FollowRemove(input: FollowRemoveInput!): FollowRemovePayload
+}
+
+"""News data"""
+type News implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  title: String
+  abstract: String
+  tag: String
+  link: String
+  time: String
+  date: String
+  image: String
+}
+
+"""A connection to a list of items."""
+type NewsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [NewsEdge]
+  count: Int
+}
+
+"""An edge in a connection."""
+type NewsEdge {
+  """The item at the end of the edge"""
+  node: News
+
+  """A cursor for use in pagination"""
+  cursor: String!
 }
 
 """An object with an ID"""
@@ -303,9 +351,11 @@ type Query {
   author(id: ID!): Author
   authors(after: String, first: Int, before: String, last: Int, search: String): AuthorConnection
   likesFromMe(article: ID!): Boolean
-  likes(after: String, first: Int, before: String, last: Int): LikeConnection
-  followsFromMe(article: ID!): Boolean
-  follows(after: String, first: Int, before: String, last: Int): FollowConnection
+  likes(after: String, first: Int, before: String, last: Int, article: ID): LikeConnection
+  followsFromMe(article: ID): Boolean
+  follows(after: String, first: Int, before: String, last: Int, article: ID!): FollowConnection
+  new(id: ID!): News
+  news(after: String, first: Int, before: String, last: Int, search: String): NewsConnection
 }
 
 input RegisterEmailInput {

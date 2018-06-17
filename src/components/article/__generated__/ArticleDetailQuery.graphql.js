@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1ef845583501f2fa96920cb2dd8dab66
+ * @relayHash 564ed8bd11767d50f97f6f545bb419ba
  */
 
 /* eslint-disable */
@@ -29,12 +29,13 @@ query ArticleDetailQuery(
 fragment ArticleDetail_query_1Bmzm5 on Query {
   article(id: $id) {
     title
+    category
     id
   }
-  likes {
+  likes(article: $id) {
     count
   }
-  follows {
+  follows(article: $id) {
     count
   }
   likesFromMe(article: $id)
@@ -53,6 +54,14 @@ var v0 = [
 ],
 v1 = [
   {
+    "kind": "Variable",
+    "name": "article",
+    "variableName": "id",
+    "type": "ID"
+  }
+],
+v2 = [
+  {
     "kind": "ScalarField",
     "alias": null,
     "name": "count",
@@ -60,7 +69,7 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
+v3 = [
   {
     "kind": "Variable",
     "name": "article",
@@ -73,7 +82,7 @@ return {
   "operationKind": "query",
   "name": "ArticleDetailQuery",
   "id": null,
-  "text": "query ArticleDetailQuery(\n  $id: ID!\n) {\n  ...ArticleDetail_query_1Bmzm5\n}\n\nfragment ArticleDetail_query_1Bmzm5 on Query {\n  article(id: $id) {\n    title\n    id\n  }\n  likes {\n    count\n  }\n  follows {\n    count\n  }\n  likesFromMe(article: $id)\n  followsFromMe(article: $id)\n}\n",
+  "text": "query ArticleDetailQuery(\n  $id: ID!\n) {\n  ...ArticleDetail_query_1Bmzm5\n}\n\nfragment ArticleDetail_query_1Bmzm5 on Query {\n  article(id: $id) {\n    title\n    category\n    id\n  }\n  likes(article: $id) {\n    count\n  }\n  follows(article: $id) {\n    count\n  }\n  likesFromMe(article: $id)\n  followsFromMe(article: $id)\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -127,6 +136,13 @@ return {
           {
             "kind": "ScalarField",
             "alias": null,
+            "name": "category",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
             "name": "id",
             "args": null,
             "storageKey": null
@@ -138,33 +154,33 @@ return {
         "alias": null,
         "name": "likes",
         "storageKey": null,
-        "args": null,
+        "args": v1,
         "concreteType": "LikeConnection",
         "plural": false,
-        "selections": v1
+        "selections": v2
       },
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "follows",
         "storageKey": null,
-        "args": null,
+        "args": v3,
         "concreteType": "FollowConnection",
         "plural": false,
-        "selections": v1
+        "selections": v2
       },
       {
         "kind": "ScalarField",
         "alias": null,
         "name": "likesFromMe",
-        "args": v2,
+        "args": v3,
         "storageKey": null
       },
       {
         "kind": "ScalarField",
         "alias": null,
         "name": "followsFromMe",
-        "args": v2,
+        "args": v1,
         "storageKey": null
       }
     ]

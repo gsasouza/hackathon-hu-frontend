@@ -5,6 +5,7 @@ import { isLoggedIn } from '../security/security';
 import Auth from '../screens/auth/Auth';
 import Dashboard from '../screens/dashboard/Dashboard';
 import Feed from '../screens/feed/Feed';
+import Home from '../screens/public/Home';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -22,7 +23,7 @@ const AppRouter = () => (
       <Route
         path={'/'}
         exact={false}
-        render={(props) => isLoggedIn() ? <Dashboard {...props} /> :<Redirect to={'/auth'}/> }
+        render={(props) => isLoggedIn() ? <Dashboard {...props} />: <Home {...props} /> }
       />
 
     </Switch>

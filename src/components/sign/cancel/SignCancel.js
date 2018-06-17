@@ -3,12 +3,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions'
-import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import { withFormik } from 'formik';
 
-import { TextField, withSnackbar } from '../../common';
+import { TextField, withSnackbar, Button } from '../../common';
 import SignCancelEmail from '../mutation/SignCancelEmailMutation';
 
 const SignSchema = Yup.object().shape({
@@ -67,7 +66,7 @@ class SignCancel extends React.Component {
           <Button variant="contained" color="secondary" onClick={this.handleSignUp}>
             Voltar
           </Button>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!!Object.keys(this.props.errors).length}>
             Cancelar Assinatura
           </Button>
         </Actions>

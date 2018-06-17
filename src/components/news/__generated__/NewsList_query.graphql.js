@@ -9,9 +9,9 @@
 /*::
 import type { ConcreteFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type ActionList_query$ref: FragmentReference;
-export type ActionList_query = {|
-  +actions: ?{|
+declare export opaque type NewsList_query$ref: FragmentReference;
+export type NewsList_query = {|
+  +news: ?{|
     +count: ?number,
     +pageInfo: {|
       +hasNextPage: boolean,
@@ -23,19 +23,18 @@ export type ActionList_query = {|
       +node: ?{|
         +id: string,
         +title: ?string,
-        +unit: ?string,
-        +situation: ?string,
+        +tag: ?string,
       |}
     |}>,
   |},
-  +$refType: ActionList_query$ref,
+  +$refType: NewsList_query$ref,
 |};
 */
 
 
 const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "name": "ActionList_query",
+  "name": "NewsList_query",
   "type": "Query",
   "metadata": {
     "connection": [
@@ -44,7 +43,7 @@ const node/*: ConcreteFragment*/ = {
         "cursor": null,
         "direction": "bidirectional",
         "path": [
-          "actions"
+          "news"
         ]
       }
     ]
@@ -84,11 +83,18 @@ const node/*: ConcreteFragment*/ = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "actions",
-      "name": "__ActionList_actions_connection",
+      "alias": "news",
+      "name": "__NewsList_news_connection",
       "storageKey": null,
-      "args": null,
-      "concreteType": "ActionConnection",
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "search",
+          "variableName": "search",
+          "type": "String"
+        }
+      ],
+      "concreteType": "NewsConnection",
       "plural": false,
       "selections": [
         {
@@ -143,7 +149,7 @@ const node/*: ConcreteFragment*/ = {
           "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "ActionEdge",
+          "concreteType": "NewsEdge",
           "plural": true,
           "selections": [
             {
@@ -152,7 +158,7 @@ const node/*: ConcreteFragment*/ = {
               "name": "node",
               "storageKey": null,
               "args": null,
-              "concreteType": "Action",
+              "concreteType": "News",
               "plural": false,
               "selections": [
                 {
@@ -172,14 +178,7 @@ const node/*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "unit",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "situation",
+                  "name": "tag",
                   "args": null,
                   "storageKey": null
                 },
@@ -206,5 +205,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'bf920d674d849817f7fc45edc90c6c0d';
+(node/*: any*/).hash = 'f581695b85fd243d0cf0fd523ae47a5e';
 module.exports = node;

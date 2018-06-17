@@ -2,13 +2,12 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions'
-import Button from '@material-ui/core/Button';
+import CardActions from '@material-ui/core/CardActions';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import { withFormik } from 'formik';
 
-import { TextField, withSnackbar } from '../../common';
+import { TextField, withSnackbar, Button } from '../../common';
 import SignCancelCodeMutation from '../mutation/SignCancelCodeMutation';
 
 const SignSchema = Yup.object().shape({

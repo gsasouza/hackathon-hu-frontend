@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import { createFragmentContainer, graphql } from 'react-relay';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
 import HeartBorderIcon from '@material-ui/icons/FavoriteBorder';
 import HeartIcon from '@material-ui/icons/Favorite';
-import Chip from '@material-ui/core/Chip';
+import ChipMUI from '@material-ui/core/Chip';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import { createQueryRenderer } from '../../relay/createQueryRender';
 import { Content } from '../common';
@@ -15,20 +15,57 @@ import LikeRemove from './mutation/LikeRemoveMutation';
 import FollowAdd from './mutation/FollowAddMutation';
 import FollowRemove from './mutation/FollowRemoveMutation';
 
-const Header = styled(Paper)`
+const Chip = styled(ChipMUI)`
+  margin: 10px;
+  background-color: rgba(255, 255, 255, 0) !important; 
+`;
+
+const Wrapper = styled(Paper)`
   display: flex;
-  height: 168px;
-  color: #606060;
-  background-color: #309dd1;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: column
 `;
 
 const Title = styled.div`
   align-self: center;
   justify-content: center;
-  font-size: 40px
+  font-size: 40px;
+  margin: 10px;
 `;
+
+const Unit = styled.div`
+  align-self: center;
+  justify-content: center;
+  font-size: 25px;
+  margin: 10px;
+`;
+
+const TabContainer = styled.div`
+  padding-top: 20px;
+  width: 100%;
+  align-self: center;
+  border-bottom: 1px solid #bbbaba;
+`;
+
+const ActionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  min-height: 168px;
+  color: #606060;
+  justify-content: space-between;
+  flex-direction: row;
+`;
+
 
 class ArticleDetail extends React.Component {
 
@@ -37,6 +74,7 @@ class ArticleDetail extends React.Component {
     likeCount: 0,
     isFollowing: false,
     followCount: 0,
+    value: 0,
   };
 
   componentDidMount(){
@@ -81,27 +119,49 @@ class ArticleDetail extends React.Component {
     });
   };
 
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
   render () {
-    const { isLiked, isFollowing, likeCount, followCount } = this.state;
-    console.log(followCount);
-    console.log(this.props);
+    const { isLiked, likeCount } = this.state;
+    const { query } = this.props;
+    console.log(query)
+    const { title, category } = query.article;
     return (
       <Content>
-        <Header>
-          <Title>
-            {'TITULO'}
-            <Chip
-              avatar={isLiked ? <HeartIcon /> : <HeartBorderIcon />}
-              label={likeCount}
-              onClick={this.onClickLike}
-            />
-            <Chip
-              avatar={ isFollowing ? <StarIcon /> : <StarBorderIcon />}
-              label={followCount}
-              onClick={this.onClickFollow}
-            />
-          </Title>
-        </Header>
+        <Wrapper>
+          <Header>
+            <div style={{ margin: '20px', padding: '0 37px'}} />
+            <TitleContainer>
+              <Title>
+                {title}
+              </Title>
+              <Unit>
+                {category}
+              </Unit>
+            </TitleContainer>
+            <ActionContainer>
+              <Chip
+                avatar={isLiked ? <HeartIcon /> : <HeartBorderIcon />}
+                label={likeCount}
+                onClick={this.onClickLike}
+              />
+            </ActionContainer>
+          </Header>
+          <TabContainer>
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+            >
+              <Tab label="Discussão" />
+            </Tabs>
+          </TabContainer>
+          {this.state.value === 0 && <div>Item Two</div>}
+        </Wrapper>
       </Content>
     )
   }
@@ -113,11 +173,12 @@ const ArticleDetailFragmentContainer = createFragmentContainer(ArticleDetail, {
     fragment ArticleDetail_query on Query @argumentDefinitions(id: { type: "ID!" }) {
       article(id: $id) {
         title
+        category
       }
-      likes {
+      likes(article: $id) {
         count
       }
-      follows {
+      follows(article: $id) {
         count
       }
       likesFromMe(article: $id)

@@ -8,6 +8,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PeopleIcon from '@material-ui/icons/People';
 import SchoolIcon from '@material-ui/icons/School';
+import PublicIcon from '@material-ui/icons/Public';
+import ListIcon from '@material-ui/icons/List';
 import { withRouter } from 'react-router-dom'
 
 import { HEADER_HEIGHT, DRAWER_WIDTH } from './consts';
@@ -46,6 +48,18 @@ class Sidebar extends React.Component {
                 <ListItemText primary="Gerenciar Pesquisadores"/>
               </ListItem>
             )}
+            <ListItem button onClick={() => this.props.history.push('/actions')}>
+              <ListItemIcon>
+                <ListIcon />
+              </ListItemIcon>
+              <ListItemText primary="Ações"/>
+            </ListItem>
+            <ListItem button onClick={() => this.props.history.push('/news')}>
+              <ListItemIcon>
+                <PublicIcon />
+              </ListItemIcon>
+              <ListItemText primary="Notícias"/>
+            </ListItem>
           </StyledList>
         </Drawer>
       </DrawerContainer>

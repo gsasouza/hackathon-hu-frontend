@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash e86b476885171cb6cd2bc5089abc821e
+ * @relayHash 2d75bb187ae6896633c0556201f84ef5
  */
 
 /* eslint-disable */
@@ -337,9 +337,7 @@ return {
         ],
         "handle": "connection",
         "key": "ActionList_actions",
-        "filters": [
-          "search"
-        ]
+        "filters": []
       }
     ]
   }

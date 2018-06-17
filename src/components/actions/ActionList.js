@@ -4,8 +4,9 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { createRefetchContainer, graphql } from 'react-relay';
 
+
 import { createQueryRenderer } from '../../relay/createQueryRender';
-import { Content, Table } from '../common';
+import { Content, Table, Button } from '../common';
 
 const Header = styled.div`
   display: flex;
@@ -38,12 +39,6 @@ class ActionList extends React.Component {
         label: 'Unidade',
       },
     },
-    {
-      property: 'situation',
-      header: {
-        label: 'Situação',
-      },
-    },
   ];
 
   setQuantityPerPage = value => {
@@ -57,13 +52,13 @@ class ActionList extends React.Component {
       ? this.loadPageForwardVars(increasePgSize)
       : this.loadPageBackwardsVars();
 
-    await relay.refetch(refetchVariables, null);
+    await relay.refetch(refetchVariables, refetchVariables);
   };
 
   loadPageForwardVars = (increasePgSize) => {
     const { query } = this.props;
-    const { articles } = query;
-    const { pageInfo } = articles;
+    const { actions } = query;
+    const { pageInfo } = actions;
     const lastItem = pageInfo.endCursor;
     return fragmentVariables => ({
       ...fragmentVariables,
@@ -74,8 +69,8 @@ class ActionList extends React.Component {
 
   loadPageBackwardsVars = () => {
     const { query } = this.props;
-    const { articles } = query;
-    const { pageInfo } = articles;
+    const { actions } = query;
+    const { pageInfo } = actions;
     const firstItem = pageInfo.startCursor;
 
     return fragmentVariables => ({
@@ -87,8 +82,8 @@ class ActionList extends React.Component {
   };
   render () {
     const { query } = this.props;
-    const { articles } = query;
-    const { count, edges, pageInfo } = articles;
+    const { actions } = query;
+    const { count, edges, pageInfo } = actions;
     const { quantityPerPage } = this.state;
     const data = edges.map(edge => edge.node);
     return (
@@ -97,6 +92,9 @@ class ActionList extends React.Component {
           <Typography variant="headline" component="h3">
             Ações
           </Typography>
+          <Button variant="contained" color="primary" style={{ marginRight: '40px' }} onClick={() => this.props.history.push('/actions/add')}>
+            Adicionar ação
+          </Button>
         </Header>
         <Divider />
         <TableWrapper>
@@ -131,7 +129,7 @@ const ActionListRefetchContainer = createRefetchContainer(
           search: { type: String }
         ) {
         actions(first: $first, last: $last, after: $after, before: $before, search: $search)
-          @connection(key: "ActionList_actions") {
+          @connection(key: "ActionList_actions", filters: []) {
           count
           pageInfo {
             hasNextPage

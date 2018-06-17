@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash af2aaea5f149edc0303214499516d4d1
+ * @relayHash 92b224597dd8d42f07a8a504b92e1f26
  */
 
 /* eslint-disable */
@@ -9,33 +9,33 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type ActionList_query$ref = any;
-export type ActionListRefetchQueryVariables = {|
+type NewsList_query$ref = any;
+export type NewsListRefetchQueryVariables = {|
   after?: ?string,
   before?: ?string,
   search?: ?string,
   first?: ?number,
   last?: ?number,
 |};
-export type ActionListRefetchQueryResponse = {|
-  +$fragmentRefs: ActionList_query$ref
+export type NewsListRefetchQueryResponse = {|
+  +$fragmentRefs: NewsList_query$ref
 |};
 */
 
 
 /*
-query ActionListRefetchQuery(
+query NewsListRefetchQuery(
   $after: String
   $before: String
   $search: String
   $first: Int
   $last: Int
 ) {
-  ...ActionList_query_nvrZx
+  ...NewsList_query_nvrZx
 }
 
-fragment ActionList_query_nvrZx on Query {
-  actions(first: $first, last: $last, after: $after, before: $before, search: $search) {
+fragment NewsList_query_nvrZx on Query {
+  news(first: $first, last: $last, after: $after, before: $before, search: $search) {
     count
     pageInfo {
       hasNextPage
@@ -47,8 +47,7 @@ fragment ActionList_query_nvrZx on Query {
       node {
         id
         title
-        unit
-        situation
+        tag
         __typename
       }
       cursor
@@ -93,20 +92,20 @@ var v0 = [
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "ActionListRefetchQuery",
+  "name": "NewsListRefetchQuery",
   "id": null,
-  "text": "query ActionListRefetchQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...ActionList_query_nvrZx\n}\n\nfragment ActionList_query_nvrZx on Query {\n  actions(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        title\n        unit\n        situation\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
+  "text": "query NewsListRefetchQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...NewsList_query_nvrZx\n}\n\nfragment NewsList_query_nvrZx on Query {\n  news(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        title\n        tag\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "ActionListRefetchQuery",
+    "name": "NewsListRefetchQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "FragmentSpread",
-        "name": "ActionList_query",
+        "name": "NewsList_query",
         "args": [
           {
             "kind": "Variable",
@@ -144,13 +143,13 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "ActionListRefetchQuery",
+    "name": "NewsListRefetchQuery",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "actions",
+        "name": "news",
         "storageKey": null,
         "args": [
           {
@@ -184,7 +183,7 @@ return {
             "type": "String"
           }
         ],
-        "concreteType": "ActionConnection",
+        "concreteType": "NewsConnection",
         "plural": false,
         "selections": [
           {
@@ -239,7 +238,7 @@ return {
             "name": "edges",
             "storageKey": null,
             "args": null,
-            "concreteType": "ActionEdge",
+            "concreteType": "NewsEdge",
             "plural": true,
             "selections": [
               {
@@ -248,7 +247,7 @@ return {
                 "name": "node",
                 "storageKey": null,
                 "args": null,
-                "concreteType": "Action",
+                "concreteType": "News",
                 "plural": false,
                 "selections": [
                   {
@@ -268,14 +267,7 @@ return {
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "unit",
-                    "args": null,
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "name": "situation",
+                    "name": "tag",
                     "args": null,
                     "storageKey": null
                   },
@@ -302,7 +294,7 @@ return {
       {
         "kind": "LinkedHandle",
         "alias": null,
-        "name": "actions",
+        "name": "news",
         "args": [
           {
             "kind": "Variable",
@@ -336,13 +328,15 @@ return {
           }
         ],
         "handle": "connection",
-        "key": "ActionList_actions",
-        "filters": []
+        "key": "NewsList_news",
+        "filters": [
+          "search"
+        ]
       }
     ]
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '523434a2cbca0ea6ed1b6cc46ece417e';
+(node/*: any*/).hash = 'dbc1e44725f10aeabb1ae40ae81cef23';
 module.exports = node;

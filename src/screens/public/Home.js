@@ -1,39 +1,40 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
+import styled from 'styled-components';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
+import Card from "@material-ui/core/Card/index";
+import CardHeader from "@material-ui/core/CardHeader";
 import Particles from 'react-particles-js';
 
-import styled from 'styled-components';
-import * as Yup from 'yup';
-import { withFormik } from 'formik';
+import Button from '../../components/common/Button';
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  background: #dbdbdb;
+`;
 
-import { TextField, Button, withSnackbar } from '../common';
-import LoginMutation from './mutation/LoginMutation';
-import { login } from '../../security/security';
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Digite um e-email válido')
-    .required('Preencha o campo de e-mail'),
-  password: Yup.string()
-    .min(6, 'A senha deve ter no minímo 6 caracteres')
-    .required('Preencha o campo de senha'),
-});
+const Content = styled(CardContent)`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100% 
+`;
 
 const FormContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 20px
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
 `;
 
 const StyledCard = styled(Card)`
   width: 600px;
   height: 300px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   position: absolute;
   top:0;
@@ -41,16 +42,7 @@ const StyledCard = styled(Card)`
   left: 0;
   right: 0;
   margin: auto;
-`;
-
-const Content = styled(CardContent)`
-  width: 100%;
-  height: 100%
-`;
-
-const Actions = styled(CardActions)`
-  align-self: flex-end;
-  margin: 10px;
+  flex-direction: column;
 `;
 
 const StyledCardHeader = styled(CardHeader)`
@@ -60,12 +52,9 @@ const StyledCardHeader = styled(CardHeader)`
   border-bottom: 1px solid #9c9c9c; 
 `;
 
-class Login extends React.Component {
-
-  handleSignUp = () => this.props.history.push('/auth/signup');
-
+export default class Auth extends React.Component {
   render() {
-    const { handleSubmit } = this.props;
+    const { history } = this.props;
     return (
       <div>
         <Particles
@@ -185,59 +174,24 @@ class Login extends React.Component {
             height: "100%"
           }}
         />
-        <StyledCard>
-          <StyledCardHeader
-            title={'LOGIN'}
-          />
-          <Content>
-            <FormContainer>
-              <TextField name={'email'} label={'Email'}{...this.props} />
-              <TextField name={'password'} label={'Senha'} {...this.props} />
-            </FormContainer>
-          </Content>
-          <Actions>
-            <Button color="primary" onClick={() => this.props.history.push('/')} style={{backgroundColor: 'rgb(62, 175, 154) !important'}}>
-              Voltar
-            </Button>
-            {/*<Button color="secondary" onClick={this.handleSignUp}>*/}
-              {/*Cadastrar*/}
-            {/*</Button>*/}
-            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!!Object.keys(this.props.errors).length}>
-              Entrar
-            </Button>
-          </Actions>
-        </StyledCard>
+        <Wrapper>
+          <StyledCard>
+            <StyledCardHeader
+              title={'UMesh'}
+            />
+            <Content>
+              <FormContainer>
+                <Button variant="contained" color="primary" onClick={() => history.push('/sign')}>
+                  Assinar Feed
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => history.push('/auth')}>
+                  Entrar
+                </Button>
+              </FormContainer>
+            </Content>
+          </StyledCard>
+        </Wrapper>
       </div>
     )
   }
 }
-
-export default withSnackbar(
-  withFormik({
-    mapPropsToValues: () => ({ email: '', password: '' }),
-    validationSchema: LoginSchema,
-    handleSubmit: (values, formikBag) => {
-      const { setSubmitting, props } = formikBag;
-      const { password, email } = values;
-
-      const input = {
-        password,
-        email
-      };
-
-      const onError = () => {
-        props.showSnackbar({ fail: true, message: 'Ocorreu um erro ao realizar a operação' });
-        setSubmitting(false);
-      };
-
-      const onCompleted = ({ LoginEmail: { token, error } }) => {
-        if (error) return props.showSnackbar({  message: 'Email ou senha inválida' });
-        login(token);
-        setSubmitting(false);
-        props.history.push('/');
-      };
-
-      LoginMutation.commit(input, onCompleted, onError);
-    }
-  })(Login)
-);

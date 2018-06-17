@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
+import Particles from 'react-particles-js';
 
 import Login from '../../components/login/Login';
 import SignUp from '../../components/signup/SignUp';
