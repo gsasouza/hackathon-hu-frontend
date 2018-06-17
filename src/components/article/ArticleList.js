@@ -35,12 +35,6 @@ class ArticleList extends React.Component {
         label: 'Título',
       },
     },
-    {
-      property: 'category',
-      header: {
-        label: 'Categoria',
-      },
-    },
   ];
 
   handleSearch = (term: string) => {
@@ -113,7 +107,7 @@ class ArticleList extends React.Component {
           <Table
             columns={this.columns}
             data={data}
-            onRowClick={({ id }) => this.props.history.push(`/articles/${id}`)}
+            onRowClick={({ url })=> window.open(url, "_blank")}
             paginationProps={{
               count,
               setQuantityPerPage: this.setQuantityPerPage,
@@ -153,7 +147,7 @@ const ArticleListRefetchContainer = createRefetchContainer(
             node {
               id
               title
-              category
+              url
             }
           }
         }

@@ -23,7 +23,7 @@ export type ArticleList_query = {|
       +node: ?{|
         +id: string,
         +title: ?string,
-        +category: ?string,
+        +url: ?string,
       |}
     |}>,
   |},
@@ -178,7 +178,7 @@ const node/*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "category",
+                  "name": "url",
                   "args": null,
                   "storageKey": null
                 },
@@ -205,5 +205,5 @@ const node/*: ConcreteFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '257b0fc806782ddf18306b08b4536293';
+(node/*: any*/).hash = '93b0f7c5faf2bc9cf33840f674f501e2';
 module.exports = node;

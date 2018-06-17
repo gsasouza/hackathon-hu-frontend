@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d0674bab2007e9cfa4e03e97a168637a
+ * @relayHash 2f345501e9f7e852daad11789ba12dc7
  */
 
 /* eslint-disable */
@@ -47,7 +47,7 @@ fragment ArticleList_query_nvrZx on Query {
       node {
         id
         title
-        category
+        url
         __typename
       }
       cursor
@@ -94,7 +94,7 @@ return {
   "operationKind": "query",
   "name": "ArticleListRefetchQuery",
   "id": null,
-  "text": "query ArticleListRefetchQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...ArticleList_query_nvrZx\n}\n\nfragment ArticleList_query_nvrZx on Query {\n  articles(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        title\n        category\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
+  "text": "query ArticleListRefetchQuery(\n  $after: String\n  $before: String\n  $search: String\n  $first: Int\n  $last: Int\n) {\n  ...ArticleList_query_nvrZx\n}\n\nfragment ArticleList_query_nvrZx on Query {\n  articles(first: $first, last: $last, after: $after, before: $before, search: $search) {\n    count\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        title\n        url\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -267,7 +267,7 @@ return {
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "category",
+                    "name": "url",
                     "args": null,
                     "storageKey": null
                   },
