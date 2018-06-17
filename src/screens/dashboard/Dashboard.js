@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
           <Route
             path={'/'}
             exact={true}
-            render={(props) => <div> HOME </div>  }
+            render={(props) => <Redirect to={'/news'} /> }
           />
           <Route
             path={'/articles'}

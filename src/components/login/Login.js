@@ -187,7 +187,7 @@ class Login extends React.Component {
         />
         <StyledCard>
           <StyledCardHeader
-            title={'LOGIN'}
+            title={'Login'}
           />
           <Content>
             <FormContainer>

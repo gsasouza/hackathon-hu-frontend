@@ -34,12 +34,6 @@ class Sidebar extends React.Component {
           <Spacer/>
           <Divider/>
           <StyledList>
-            <ListItem button onClick={() => this.props.history.push('/articles')}>
-              <ListItemIcon>
-                <SchoolIcon />
-              </ListItemIcon>
-              <ListItemText primary="Pesquisas"/>
-            </ListItem>
             { this.props.isAdmin && (
               <ListItem button onClick={() => this.props.history.push('/authors')}>
                 <ListItemIcon>
@@ -59,6 +53,12 @@ class Sidebar extends React.Component {
                 <PublicIcon />
               </ListItemIcon>
               <ListItemText primary="Notícias"/>
+            </ListItem>
+            <ListItem button onClick={() => this.props.history.push('/articles')}>
+              <ListItemIcon>
+                <SchoolIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pesquisas"/>
             </ListItem>
           </StyledList>
         </Drawer>

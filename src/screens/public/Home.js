@@ -177,12 +177,15 @@ export default class Auth extends React.Component {
         <Wrapper>
           <StyledCard>
             <StyledCardHeader
-              title={'UMesh'}
+              title={'HuMesh'}
             />
             <Content>
               <FormContainer>
                 <Button variant="contained" color="primary" onClick={() => history.push('/sign')}>
                   Assinar Feed
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => history.push('/auth/signup')}>
+                  Cadastrar
                 </Button>
                 <Button variant="contained" color="primary" onClick={() => history.push('/auth')}>
                   Entrar
